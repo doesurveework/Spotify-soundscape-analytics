@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>soundscape.</title>
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="app-container">
+
+
+    <header class="header">
+      <h1 class="logo">soundscape<span>.</span></h1>
+      <div class="status-badge">
+        <span id="status-dot" class="status-dot"></span>
+        <span id="status-text">loading analytics...</span>
+      </div>
+    </header>
+
+
+    <div id="empty-state" class="empty-state" hidden>
+      <p id="empty-message">Something went wrong talking to Spotify.</p>
+    </div>
+
+
+    <main class="dashboard-content">
+
+
+      <section class="card archetype-card">
+        <h2 class="section-subtitle">YOUR LISTENING ARCHETYPE</h2>
+        <h3 id="personality-type" class="archetype-title">—</h3>
+
+        <div class="equalizer-container">
+          <div class="eq-item">
+            <div class="eq-bar" data-feature="energy"><span></span></div>
+            <span class="eq-label">energy</span>
+          </div>
+          <div class="eq-item">
+            <div class="eq-bar" data-feature="danceability"><span></span></div>
+            <span class="eq-label">danceability</span>
+          </div>
+          <div class="eq-item">
+            <div class="eq-bar" data-feature="valence"><span></span></div>
+            <span class="eq-label">valence</span>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="scores-grid">
+        <div class="card score-card">
+          <span class="score-label">OBSCURITY SCORE</span>
+          <span id="obscurity-score" class="score-value">—</span>
+          <span class="score-hint">100 = deep cuts only · 0 = mainstream chart-topper</span>
+        </div>
+        <div class="card score-card">
+          <span class="score-label">AVG. ENERGY</span>
+          <span id="avg-energy" class="score-value">—</span>
+        </div>
+        <div class="card score-card">
+          <span class="score-label">AVG. DANCEABILITY</span>
+          <span id="avg-dance" class="score-value">—</span>
+        </div>
+        <div class="card score-card">
+          <span class="score-label">AVG. VALENCE</span>
+          <span id="avg-valence" class="score-value">—</span>
+        </div>
+      </section>
+
+
+      <section class="card chart-card">
+        <h2 class="section-subtitle">TOP TRACKS · POPULARITY</h2>
+        <div class="chart-wrapper">
+          <canvas id="popularity-chart"></canvas>
+        </div>
+      </section>
+
+
+      <section class="card tracklist-card">
+        <h2 class="section-subtitle">YOUR TOP TRACKS</h2>
+        <ul id="tracklist" class="track-list"></ul>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--<title>Soundscape — Your Listening Analytics</title>-->
+<!--<link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">-->
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--  <header class="topbar">-->
+<!--    <div class="wordmark">soundscape<span class="dot">.</span></div>-->
+<!--    <div class="topbar-status">-->
+<!--      <span class="status-dot" id="status-dot"></span>-->
+<!--      <span id="status-text">reading your last 20 tracks</span>-->
+<!--    </div>-->
+<!--  </header>-->
+
+<!--  <main>-->
+
+<!--    &lt;!&ndash; HERO: personality type as the thesis &ndash;&gt;-->
+<!--    <section class="hero">-->
+<!--      <p class="eyebrow">your listening archetype</p>-->
+<!--      <h1 id="personality-type" class="personality-type">—</h1>-->
+
+<!--      &lt;!&ndash; Signature element: equalizer bars driven by real audio features &ndash;&gt;-->
+<!--      <div class="eq" id="eq" aria-hidden="true">-->
+<!--        <div class="eq-bar" data-feature="energy"><span></span></div>-->
+<!--        <div class="eq-bar" data-feature="danceability"><span></span></div>-->
+<!--        <div class="eq-bar" data-feature="valence"><span></span></div>-->
+<!--      </div>-->
+<!--      <div class="eq-labels">-->
+<!--        <span>energy</span>-->
+<!--        <span>danceability</span>-->
+<!--        <span>valence</span>-->
+<!--      </div>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; SCORES &ndash;&gt;-->
+<!--    <section class="scores">-->
+<!--      <div class="score-card">-->
+<!--        <p class="score-label">obscurity score</p>-->
+<!--        <p class="score-value" id="obscurity-score">—</p>-->
+<!--        <p class="score-hint">100 = deep cuts only · 0 = mainstream chart-topper</p>-->
+<!--      </div>-->
+<!--      <div class="score-card">-->
+<!--        <p class="score-label">avg. energy</p>-->
+<!--        <p class="score-value" id="avg-energy">—</p>-->
+<!--      </div>-->
+<!--      <div class="score-card">-->
+<!--        <p class="score-label">avg. danceability</p>-->
+<!--        <p class="score-value" id="avg-dance">—</p>-->
+<!--      </div>-->
+<!--      <div class="score-card">-->
+<!--        <p class="score-label">avg. valence</p>-->
+<!--        <p class="score-value" id="avg-valence">—</p>-->
+<!--      </div>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; CHART &ndash;&gt;-->
+<!--    <section class="chart-section">-->
+<!--      <p class="section-label">top tracks · popularity</p>-->
+<!--      <canvas id="popularity-chart" height="90"></canvas>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; TRACK LIST &ndash;&gt;-->
+<!--    <section class="tracklist-section">-->
+<!--      <p class="section-label">your top 20</p>-->
+<!--      <ol class="tracklist" id="tracklist">-->
+<!--        &lt;!&ndash; populated by dashboard.js &ndash;&gt;-->
+<!--      </ol>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; EMPTY / ERROR STATE &ndash;&gt;-->
+<!--    <section class="empty-state" id="empty-state" hidden>-->
+<!--      <p class="empty-title">Couldn't load your data</p>-->
+<!--      <p class="empty-body" id="empty-message">Something went wrong talking to Spotify. Try logging in again.</p>-->
+<!--      <a href="/login" class="empty-action">Log in again</a>-->
+<!--    </section>-->
+
+<!--  </main>-->
+
+<!--  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>-->
+<!--  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>-->
+<!--</body>-->
+<!--</html>-->
+
